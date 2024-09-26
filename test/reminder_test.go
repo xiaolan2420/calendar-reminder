@@ -12,7 +12,7 @@ import (
 
 // 新建提醒测试
 func TestCreateReminder(t *testing.T) {
-	// 建立真实的数据库连接
+	// 建立数据库连接
 	dsn := "root:1@tcp(localhost:3306)/reminder?charset=utf8mb4&parseTime=True&loc=Local"
 	db, err := gorm.Open(mysql.Open(dsn), &gorm.Config{})
 	if err != nil {
@@ -61,7 +61,7 @@ func TestCreateReminder(t *testing.T) {
 
 // 删除提醒测试
 func TestDeleteReminder(t *testing.T) {
-	// 建立真实的数据库连接
+	// 建立数据库连接
 	dsn := "root:1@tcp(localhost:3306)/reminder?charset=utf8mb4&parseTime=True&loc=Local"
 	db, err := gorm.Open(mysql.Open(dsn), &gorm.Config{})
 	if err != nil {
@@ -102,7 +102,7 @@ func TestDeleteReminder(t *testing.T) {
 
 // 展示提醒测试
 func TestGetRemindersByUserID(t *testing.T) {
-	// 建立真实的数据库连接
+	// 建立数据库连接
 	dsn := "root:1@tcp(localhost:3306)/reminder?charset=utf8mb4&parseTime=True&loc=Local"
 	db, err := gorm.Open(mysql.Open(dsn), &gorm.Config{})
 	if err != nil {
@@ -145,7 +145,7 @@ func TestGetRemindersByUserID(t *testing.T) {
 
 // 更新提醒测试
 func TestUpdateReminder(t *testing.T) {
-	// 建立真实的数据库连接
+	// 建立数据库连接
 	dsn := "root:1@tcp(localhost:3306)/reminder?charset=utf8mb4&parseTime=True&loc=Local"
 	db, err := gorm.Open(mysql.Open(dsn), &gorm.Config{})
 	if err != nil {
@@ -193,7 +193,7 @@ func TestUpdateReminder(t *testing.T) {
 }
 
 func TestSendSmsReminder(t *testing.T) {
-	// 建立真实的数据库连接
+	// 建立数据库连接
 	dsn := "root:1@tcp(localhost:3306)/reminder?charset=utf8mb4&parseTime=True&loc=Local"
 	db, err := gorm.Open(mysql.Open(dsn), &gorm.Config{})
 	if err != nil {
