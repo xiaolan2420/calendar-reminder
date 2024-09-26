@@ -12,20 +12,18 @@ var upgrade = websocket.Upgrader{
 	CheckOrigin: func(r *http.Request) bool {
 		return true
 	},
-	// 允许指定的 WebSocket 版本，这里假设允许 13 版本
-	Subprotocols: []string{"13"},
 }
 
-// 全局的 WebSocket 连接映射，使用用户 ID 作为键
+// 全局的 WebSocket 连接映射，使用用户id作为键
 var wsConnections = make(map[int]*websocket.Conn)
 
 // Handler 结构体用于处理 WebSocket 相关的操作
 type Handler struct {
 }
 
-// HandleWebSocket 函数用于处理 WebSocket 连接相关逻辑
+// HandleWebSocket 函数用于处理WebSocket连接相关逻辑
 func (h *Handler) HandleWebSocket(c *gin.Context) {
-	// 获取当前用户ID（从JWT解析）
+	// 获取当前用户id（从JWT解析）
 	userData, exists := c.Get("userID")
 	if !exists {
 		c.JSON(http.StatusUnauthorized, gin.H{"error": "Unauthorized"})
