@@ -17,49 +17,23 @@ var upgrade = websocket.Upgrader{
 	},
 }
 
-// 全局的WebSocket连接映射，使用用户ID作为键
+// 全局的WebSocket连接映射，使用用户id作为键
 var wsConnections = make(map[int]*websocket.Conn)
 
 // Handler 结构体用于处理WebSocket相关的操作
 type Handler struct {
-	cron *cron.Cron
-}
-
-// GetUserId 从Gin上下文获取用户ID（从JWT解析）
-func GetUserId(c *gin.Context) int {
-	// 获取当前用户ID（从JWT解析）
-	userData, exists := c.Get("userID")
-	if !exists {
-		c.JSON(http.StatusUnauthorized, gin.H{"error": "Unauthorized"})
-		return 0
-	}
-
-	// 断言
-	userMap, ok := userData.(jwt.MapClaims)
-	if !ok {
-		c.JSON(http.StatusUnauthorized, gin.H{"error": "Invalid user data"})
-		return 0
-	}
-
-	// 提取 user_id 并转换为整数
-	userIDFloat, ok := userMap["user_id"].(float64)
-	if !ok {
-		c.JSON(http.StatusUnauthorized, gin.H{"error": "Invalid user ID"})
-		return 0
-	}
-	userID := int(userIDFloat)
-	return userID
+	
 }
 
 // HandleWebSocket 函数用于处理WebSocket连接相关逻辑
 func HandleWebSocket() http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
-		// 从 Gin 上下文中获取用户 ID
+		// 从 Gin 上下文中获取用户id
 		ctx, _ := gin.CreateTestContext(w)
 		ctx.Request = r
 		userID := GetUserId(ctx)
 		if userID == 0 {
-			fmt.Println("获取用户ID失败")
+			fmt.Println("获取用户id失败")
 			w.WriteHeader(http.StatusBadRequest)
 			return
 		}
@@ -96,13 +70,4 @@ func HandleWebSocket() http.HandlerFunc {
 			}
 		}
 	}
-}
-
-// WriteMessage 向WebSocket连接写入消息
-func (h *Handler) WriteMessage(conn *websocket.Conn, message []byte) error {
-	err := conn.WriteMessage(websocket.TextMessage, message)
-	if err != nil {
-		log.Println("发送WebSocket消息失败:", err)
-	}
-	return err
 }
