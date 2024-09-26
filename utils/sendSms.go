@@ -19,6 +19,7 @@ var ctx = context.Background()
 
 // CreateClient 创建阿里云短信客户端
 func CreateClient() (*dysmsapi20170525.Client, error) {
+	// 密钥在环境中配置了
 	accessKeyId := os.Getenv("ALIBABA_CLOUD_ACCESS_KEY_ID")
 	accessKeySecret := os.Getenv("ALIBABA_CLOUD_ACCESS_KEY_SECRET")
 
@@ -54,6 +55,7 @@ func SendSmsCode(phoneNumber string, code string) error {
 		return err
 	}
 
+	// 调用验证码模板
 	request := &dysmsapi20170525.SendSmsRequest{
 		PhoneNumbers:  tea.String(phoneNumber),
 		SignName:      tea.String("皛懒日程提醒"),
@@ -94,6 +96,7 @@ func SendSmsReminder(phoneNumber string, content string) error {
 		return err
 	}
 
+	// 调用提醒模板
 	request := &dysmsapi20170525.SendSmsRequest{
 		PhoneNumbers:  tea.String(phoneNumber),
 		SignName:      tea.String("皛懒日程提醒"),
